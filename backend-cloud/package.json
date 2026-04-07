@@ -1,0 +1,19 @@
+{
+  "name": "backend-cloud",
+  "version": "1.0.0",
+  "description": "Multi-tenant SaaS backend for paid cloud features.",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "node --loader ts-node/esm src/index.ts",
+    "test": "node -e \"console.log('backend tests placeholder')\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

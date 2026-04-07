@@ -1,0 +1,23 @@
+name: core-ci
+
+on:
+  push:
+    paths:
+      - "core/**"
+      - ".github/workflows/core-ci.yml"
+  pull_request:
+    paths:
+      - "core/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: core
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo clippy -- -D warnings
+      - run: cargo test
+      - run: cargo bench --no-run

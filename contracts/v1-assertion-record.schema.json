@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vibediff.dev/contracts/v1/assertion-record.schema.json",
+  "title": "AssertionRecord",
+  "type": "object",
+  "required": ["assertion_id", "model", "commit_hash", "scores", "composite_score", "label"],
+  "properties": {
+    "assertion_id": { "type": "string", "format": "uuid" },
+    "model": { "type": "string" },
+    "commit_hash": { "type": "string" },
+    "scores": {
+      "type": "object",
+      "required": ["logic_match", "scope_adherence", "side_effect_detection", "structural_proportionality"],
+      "properties": {
+        "logic_match": { "type": "number", "minimum": 0, "maximum": 1 },
+        "scope_adherence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "side_effect_detection": { "type": "number", "minimum": 0, "maximum": 1 },
+        "structural_proportionality": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "composite_score": { "type": "number", "minimum": 0, "maximum": 1 },
+    "label": { "type": "string", "enum": ["ALIGNED", "DRIFTING", "SUSPECT", "MISALIGNED"] }
+  }
+}

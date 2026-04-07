@@ -1,0 +1,36 @@
+name: VibeDiff Semantic Audit
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  vibediff-audit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: core
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build
+        run: cargo build --release
+      - name: Run VibeDiff audit (json)
+        run: cargo run -- check HEAD --format json > /tmp/vibediff_result.json
+      - name: Generate PR comment
+        run: python3 ../.github/scripts/vibediff_comment.py --result /tmp/vibediff_result.json --output /tmp/vibediff_comment.md
+      - name: Validate comment output shape
+        run: python3 ../.github/scripts/vibediff_comment.py --result /tmp/vibediff_result.json --output /tmp/vibediff_comment.md && test -s /tmp/vibediff_comment.md
+      - name: Post PR comment
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          path: /tmp/vibediff_comment.md
+          header: vibediff-audit

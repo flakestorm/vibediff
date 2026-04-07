@@ -1,0 +1,24 @@
+name: frontend-cloud-ci
+
+on:
+  push:
+    paths:
+      - "frontend-cloud/**"
+      - ".github/workflows/frontend-cloud-ci.yml"
+  pull_request:
+    paths:
+      - "frontend-cloud/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend-cloud
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci || npm install
+      - run: npm run build

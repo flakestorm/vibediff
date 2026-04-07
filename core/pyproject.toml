@@ -1,0 +1,30 @@
+[build-system]
+requires = ["maturin>=1.7,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "vibediff"
+version = "0.1.0"
+description = "Git-native semantic intent auditor for code diffs."
+readme = "../README.md"
+requires-python = ">=3.8"
+license = { text = "Apache-2.0" }
+authors = [{ name = "VibeDiff Maintainers" }]
+classifiers = [
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Rust",
+  "Environment :: Console",
+  "Topic :: Software Development :: Version Control :: Git"
+]
+
+[project.urls]
+Homepage = "https://vibediff.dev"
+Repository = "https://github.com/fhumarang/vibediff"
+Issues = "https://github.com/fhumarang/vibediff/issues"
+
+[tool.maturin]
+bindings = "bin"
+manifest-path = "Cargo.toml"
+strip = true
+include = [{ path = "../LICENSE", format = "sdist" }]

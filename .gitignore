@@ -1,0 +1,60 @@
+# ── Build outputs ────────────────────────────────────────────────────────────
+**/target/
+**/dist/
+**/.next/
+**/node_modules/
+*.log
+*.lock.bak
+
+# ── Python ───────────────────────────────────────────────────────────────────
+.venv/
+venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+.Python
+
+# ── Rust ─────────────────────────────────────────────────────────────────────
+target/
+**/*.rs.bk
+
+# ── VibeDiff local runtime cache (sled DB, per-user, never committed) ────────
+core/.vibediff-cache/
+.vibediff-cache/
+**/.vibediff-cache/
+/tmp/vibediff_result.json
+
+# ── Environment & secrets ─────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ── OS / editor artifacts ─────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ── Internal session / planning docs (not for public OSS) ────────────────────
+IMPLEMENTATION_GUIDE.md
+IMPLEMENTATION_TRACKER.md
+vibediff_spec.md
+
+# ── Root-level duplicate docs (canonical copies live in docs/) ───────────────
+/CONTRIBUTING.md
+/ISSUE_GUIDE.md

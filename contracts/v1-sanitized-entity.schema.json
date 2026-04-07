@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vibediff.dev/contracts/v1/sanitized-entity.schema.json",
+  "title": "SanitizedEntityChange",
+  "type": "object",
+  "required": ["entity_name", "fully_qualified_name", "entity_type", "change_kind", "file_path"],
+  "properties": {
+    "entity_name": { "type": "string" },
+    "fully_qualified_name": { "type": "string" },
+    "entity_type": { "type": "string" },
+    "change_kind": { "type": "string" },
+    "file_path": { "type": "string" },
+    "side_effect_types": { "type": "array", "items": { "type": "string" } }
+  }
+}
