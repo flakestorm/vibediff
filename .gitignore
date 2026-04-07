@@ -58,3 +58,6 @@ vibediff_spec.md
 # ── Root-level duplicate docs (canonical copies live in docs/) ───────────────
 /CONTRIBUTING.md
 /ISSUE_GUIDE.md
+
+frontend-cloud/
+backend-cloud/
