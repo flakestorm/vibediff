@@ -1,8 +1,8 @@
 # Self-hosted CI with VibeDiff (BYO LLM key)
 
-Use this guide when you run **VibeDiff in your own GitHub Actions** (or other CI) with **your** infrastructure and **your** model provider keys. Nothing here requires the VibeDiff GitHub App or paid cloud.
+Use this guide when you run **VibeDiff in your own GitHub Actions** (or other CI) with **your** infrastructure and **your** model provider keys. Nothing here requires paid cloud.
 
-For org-wide PR enforcement without maintaining workflow YAML, see the [README](../README.md) **CI Integration** section ([VibeDiff GitHub App](https://vibediff.dev/app)).
+Org-wide enforcement without YAML (GitHub App, team dashboard) is **on the VibeDiff Cloud roadmap** — see the **OSS vs Cloud** table in the [README](../README.md) and [vibediff.dev](https://vibediff.dev).
 
 ---
 

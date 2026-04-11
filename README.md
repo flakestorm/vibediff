@@ -379,13 +379,9 @@ The hook is **fail-open by default** — a VibeDiff timeout or crash never block
 
 ## CI Integration
 
-For **mandatory PR enforcement across your team** — without YAML setup:
+**Cloud (roadmap):** Team and org PR enforcement without maintaining workflow YAML — GitHub App, dashboard, and related features — is covered in the **OSS vs Cloud** table below (Cloud column). Follow [vibediff.dev](https://vibediff.dev) for product updates.
 
-**Install the VibeDiff GitHub App at [vibediff.dev/app](https://vibediff.dev/app)**
-
-2-click install · all repos in your org · team dashboard · 14-day free trial
-
-For **self-hosted CI** using your own LLM keys and workflows, see [docs/CI_SELFHOSTED.md](docs/CI_SELFHOSTED.md).
+**OSS (today):** Self-hosted CI with your own LLM keys and workflows → [docs/CI_SELFHOSTED.md](docs/CI_SELFHOSTED.md).
 
 ---
 
