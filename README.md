@@ -377,85 +377,15 @@ The hook is **fail-open by default** — a VibeDiff timeout or crash never block
 
 ---
 
-## GitHub Actions Integration
+## CI Integration
 
-Add `.github/workflows/vibediff-check.yml` to your repo:
+For **mandatory PR enforcement across your team** — without YAML setup:
 
-```yaml
-name: VibeDiff Semantic Audit
+**Install the VibeDiff GitHub App at [vibediff.dev/app](https://vibediff.dev/app)**
 
-on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+2-click install · all repos in your org · team dashboard · 14-day free trial
 
-permissions:
-  contents: read
-  pull-requests: write
-
-jobs:
-  vibediff-audit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install VibeDiff
-        run: pip install vibediff
-
-      - name: Run semantic audit
-        run: |
-          vibediff check \
-            --format json \
-            --output-file /tmp/vibediff_result.json
-
-      - name: Generate and post PR comment
-        run: |
-          python3 .github/scripts/vibediff_comment.py \
-            --result /tmp/vibediff_result.json \
-            --output /tmp/comment.md
-
-      - name: Post sticky PR comment
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          path: /tmp/comment.md
-          header: vibediff-audit
-
-      - name: Enforce policy (optional)
-        if: ${{ vars.VIBEDIFF_ENFORCE == 'true' }}
-        run: |
-          LABEL=$(jq -r '.label' /tmp/vibediff_result.json)
-          if [[ "$LABEL" == "MISALIGNED" ]]; then
-            echo "::error::VibeDiff: PR is MISALIGNED. Review flagged entities."
-            exit 1
-          fi
-```
-
-> Included as `.github/workflows/vibediff-check.yml`. Customize triggers, thresholds, and policy gates → [docs/CONFIGURATION_GUIDE.md](docs/CONFIGURATION_GUIDE.md)
-
----
-
-## CI Gate (Script Example)
-
-Block a PR merge programmatically based on Vibe Score:
-
-```bash
-vibediff check HEAD --format json > vibediff_result.json
-
-python3 - <<'PY'
-import json, sys
-result = json.load(open("vibediff_result.json"))
-label = result.get("label", "")
-score = result.get("composite_score", 0)
-print(f"Vibe Score: {score} ({label})")
-if label in {"MISALIGNED", "SUSPECT"}:
-    print("Flagged entities:")
-    for e in result.get("flagged_entities", []):
-        print(f"  • {e['entity_name']}: {e['detail']}")
-    sys.exit(1)
-print("Policy: PASS")
-PY
-```
+For **self-hosted CI** using your own LLM keys and workflows, see [docs/CI_SELFHOSTED.md](docs/CI_SELFHOSTED.md).
 
 ---
 
@@ -492,13 +422,13 @@ VibeDiff is written in **Rust** with a tokio async runtime. Key design decisions
 |---|---|---|
 | Local CLI semantic audit | ✅ | ✅ |
 | Pre-commit hook | ✅ | ✅ |
-| GitHub Actions integration | ✅ | ✅ |
+| Self-hosted CI (Actions + CLI, BYO key) | ✅ ([CI_SELFHOSTED.md](docs/CI_SELFHOSTED.md)) | — |
 | JSON / SARIF outputs | ✅ | ✅ |
 | Ollama + BYO API key | ✅ | ✅ |
 | Team dashboard & drift trends | — | ✅ |
 | Policy Server (org-wide YAML rules) | — | ✅ |
 | Centralized audit history | — | ✅ |
-| GitHub App (no workflow setup needed) | — | ✅ |
+| GitHub App (org PR enforcement, no YAML) | — | ✅ |
 | SAML SSO / on-prem deployment | — | ✅ Enterprise |
 | Compliance export (SOC 2, HIPAA) | — | ✅ Enterprise |
 
@@ -513,6 +443,7 @@ The OSS core is the foundation. Cloud is additive — your local setup never bre
 | Document | Description |
 |---|---|
 | [User Guide](docs/USER_GUIDE.md) | Full installation (Windows/macOS/Linux), CLI reference, hook setup, troubleshooting |
+| [Self-hosted CI](docs/CI_SELFHOSTED.md) | GitHub Actions + `vibediff` CLI, PR comments script, BYO LLM keys |
 | [Configuration Guide](docs/CONFIGURATION_GUIDE.md) | Workflow YAML customization, env vars, CI policy tuning, secrets |
 | [Contributing](docs/CONTRIBUTING.md) | Dev setup, PR process, coding standards |
 | [Issue Guide](docs/ISSUE_GUIDE.md) | How to report bugs, request features, labels and triage |
